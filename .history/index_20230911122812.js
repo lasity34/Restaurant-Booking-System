@@ -16,34 +16,13 @@ app.use(express.static('public'));
 app.use(flash());
 
 // Initialize pg-promise
-dotenv.config();
-
-// Initialize pg-promise
-const pgp = pgPromise();
+const pgp = pgPromise();  // Initialize pg-promise here
 
 // Database connection
 const db = pgp({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
-
-// Test if the database connection is null
-if (!db) {
-  console.error("Database connection is null. Shutting down...");
-  process.exit(1);
-}
-
-// Test database connection
-db.one('SELECT version()')
-  .then(result => {
-    console.log('DB connection successful:', result);
-  })
-  .catch(error => {
-    console.log('DB connection error:', error);
-  });
-
-// Initialize restaurant service
-const restaurant_service = restaurant(db);
 
 // Test database connection
 db.one('SELECT version()')
@@ -68,7 +47,7 @@ app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
 
 // Services and routes
-
+const restaurant_service = restaurant(db);
 const restaurant_route = RestaurantRoute(restaurant_service);
 
 app.get("/", restaurant_route.get);

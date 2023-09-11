@@ -1,14 +1,11 @@
 import assert from "assert"
 import RestaurantTableBooking from "../services/restaurant.js";
-import pgPromise from "pg-promise";
+import pgp from "pg-promise";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 
-
-// Database connection
-const pgp = pgPromise();
 
 // Database connection
 const db = pgp({
@@ -89,8 +86,8 @@ describe("The restaurant booking table", function () {
     it("Check if the booking has a user name provided.", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
         assert.deepEqual("Please enter a username", await restaurantTableBooking.bookTable({
-            tableName: 'Table four',
-            phoneNumber: Number('084 009 8910'),
+            tableName: 'Table eight',
+            phoneNumber: '084 009 8910',
             seats: 2
         }));
     });
@@ -98,7 +95,7 @@ describe("The restaurant booking table", function () {
     it("Check if the booking has a contact number provided.", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
         assert.deepEqual("Please enter a contact number", await restaurantTableBooking.bookTable({
-            tableName: 'Table four',
+            tableName: 'Table eight',
             username: 'Kim',
             seats: 2
         }));
@@ -106,16 +103,16 @@ describe("The restaurant booking table", function () {
 
     it("should not be able to book a table with an invalid table name.", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
-        const message = await restaurantTableBooking.bookTable({
-            tableName: 'Table eight', // Make sure this table is actually invalid in your DB
+
+        await restaurantTableBooking.bookTable({
+            tableName: 'Table eight',
             username: 'Kim',
-            phoneNumber: Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 2
         });
-    
-        assert.deepEqual(message, "Invalid table name provided");
+
+        assert.deepEqual("Invalid table name provided", message);
     });
-    
 
     it("should be able to book a table.", async function () {
         let restaurantTableBooking = RestaurantTableBooking(db);
@@ -126,7 +123,7 @@ describe("The restaurant booking table", function () {
         await restaurantTableBooking.bookTable({
             tableName: 'Table three',
             username: 'Kim',
-            phoneNumber:  Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 2
         });
 
@@ -149,21 +146,21 @@ describe("The restaurant booking table", function () {
         restaurantTableBooking.bookTable({
             tableName: 'Table five',
             username: 'Jodie',
-            phoneNumber:  Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 4
         });
 
         restaurantTableBooking.bookTable({
             tableName: 'Table four',
             username: 'Jodie',
-            phoneNumber: Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 2
         });
 
         await restaurantTableBooking.bookTable({
             tableName: 'Table five',
             username: 'Jodie',
-            phoneNumber:  Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 4
         })
 
@@ -177,14 +174,14 @@ describe("The restaurant booking table", function () {
         await restaurantTableBooking.bookTable({
             tableName: 'Table five',
             username: 'Jodie',
-            phoneNumber:  Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 4
         });
 
         restaurantTableBooking.bookTable({
             tableName: 'Table four',
             username: 'Kim',
-            phoneNumber:  Number('084 009 8910'),
+            phoneNumber: '084 009 8910',
             seats: 2
         });
 

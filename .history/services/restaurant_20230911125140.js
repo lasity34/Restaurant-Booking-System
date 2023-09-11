@@ -7,11 +7,11 @@ export default function restaurant(db){
     // Query to book a table by name if not already booked and within capacity
     async function bookTable({ tableName, username, phoneNumber, seats }) {
         try {
-          
+            console.log('Trying to book table:', tableName);
             
             const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
             
-         
+            console.log('Table from DB:', table);
             
             if (!table) return 'Invalid table name provided';
             
