@@ -3,25 +3,14 @@ import pgp from "pg-promise";
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "flash-express";
-import dotenv from "dotenv";
-import RestaurantRoute from "./routes/restaurantRoutes.js";
-import restaurant from "./services/restaurant.js";
 
 const app = express()
-dotenv.config();
 
 app.use(express.static('public'));
 app.use(flash());
 
-const connection = {
-    connectionString: process.env.THE_VARIABLE_NAME_HERE,
-    ssl: { rejectUnauthorized: false },
-  };
-
-
-
-  const db = pgp()(connection);
-  
+const connectionString = process.env.THE_VARIABLE_NAME_HERE
+const db = pgp()(connectionString);
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -35,14 +24,15 @@ const handlebarSetup = exphbs.engine({
 app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
 
+app.get("/", (req, res) => {
 
-const restaurant_service = restaurant(db)
-
-const restaurant_route = RestaurantRoute(restaurant_service)
-app.get("/", restaurant_route.get);
+    res.render('index', { tables : [{}, {}, {booked : true}, {}, {}, {}]})
+});
 
 
-app.get("/bookings", restaurant_route.bookings );
+app.get("/bookings", (req, res) => {
+    res.render('bookings', { tables : [{}, {}, {}, {}, {}, {}]})
+});
 
 
 var portNumber = process.env.PORT || 3000;

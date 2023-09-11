@@ -5,33 +5,14 @@ export default function restaurant(db){
     }
 
     // Query to book a table by name if not already booked and within capacity
-    async function bookTable(tableName, username, phoneNumber, seats) {
-        try {
-            const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
-            
-          
-        console.log(table)
-            
-            // Moved this block to the top, after table validity checks
-            if (seats > table.capacity) return "capacity greater than the table seats";
-            
-            // Check for username, phoneNumber, and seats
-            if (!username) return "Please enter a username";
-            if (!phoneNumber) return "Please enter a contact number";
-            if (!seats) return "Please enter the number of seats";
-            
-            await db.none('UPDATE table_booking SET booked = true, username = $1, contact_number = $2, number_of_people = $3 WHERE table_name = $4;', 
-                          [username, phoneNumber, seats, tableName]);
-            
+    async function bookTable(tableName, username, numberOfPeople) {
+        const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
+        if (table && !table.booked && numberOfPeople <= table.capacity) {
+            await db.none('UPDATE table_booking SET booked = true, username = $1, number_of_people = $2 WHERE table_name = $3;', [username, numberOfPeople, tableName]);
             return true;
-        } catch (error) {
-            console.error(error);
-            return "An error occurred while booking the table";
         }
+        return false;
     }
-    
-    
-
 
     // Query to get all booked tables
     async function getBookedTables() {

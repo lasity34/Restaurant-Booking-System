@@ -9,13 +9,13 @@ export default function restaurant(db){
         try {
             const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
             
-          
-        console.log(table)
+            if (!table) return "Invalid table name provided";
+            if (table.booked) return "Table is already booked";
             
-            // Moved this block to the top, after table validity checks
+            // Check the seating capacity first
             if (seats > table.capacity) return "capacity greater than the table seats";
             
-            // Check for username, phoneNumber, and seats
+            // Now check for username, phoneNumber, and seats
             if (!username) return "Please enter a username";
             if (!phoneNumber) return "Please enter a contact number";
             if (!seats) return "Please enter the number of seats";
@@ -29,7 +29,6 @@ export default function restaurant(db){
             return "An error occurred while booking the table";
         }
     }
-    
     
 
 

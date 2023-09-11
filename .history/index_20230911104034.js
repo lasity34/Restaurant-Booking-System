@@ -4,8 +4,8 @@ import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "flash-express";
 import dotenv from "dotenv";
-import RestaurantRoute from "./routes/restaurantRoutes.js";
-import restaurant from "./services/restaurant.js";
+import RestaurantRoute from "./routes/restaurantRoutes";
+import restaurant from "./services/restaurant";
 
 const app = express()
 dotenv.config();

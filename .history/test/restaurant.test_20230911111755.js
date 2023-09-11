@@ -13,17 +13,10 @@ const connection = {
 const db = pgp()(connection);
 
 describe("The restaurant booking table", function () {
-    this.timeout(5000);
     beforeEach(async function () {
         try {
     
             await db.none("TRUNCATE TABLE table_booking RESTART IDENTITY CASCADE;");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table one', 4, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table two', 6, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table three', 4, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table four', 2, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table five', 6, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table six', 4, false);");
         } catch (err) {
             console.log(err);
             throw err;
@@ -58,28 +51,15 @@ describe("The restaurant booking table", function () {
         assert.deepEqual("capacity greater than the table seats", result);
     });
 
-  it("should check if there are available seats for a booking.", async function () {
-    const restaurantTableBooking = await RestaurantTableBooking(db);
-    
-    // Number of seats required for the booking
-    const seatsRequired = 4;
+    it("should check if there are available seats for a booking.", async function () {
+        const restaurantTableBooking = await RestaurantTableBooking(db);
 
-    // Fetch all tables
-    const tables = await restaurantTableBooking.getTables();
+        // get all the tables
 
-    // Filter out booked tables
-    const availableTables = tables.filter(table => !table.booked);
+        // loop over the tables and see if there is a table that is not booked
 
-    // Check if there is a table with enough seats
-    const tableWithEnoughSeats = availableTables.find(table => table.capacity >= seatsRequired);
-
-    if (tableWithEnoughSeats) {
-        assert.deepEqual(true, true); // Pass the test
-    } else {
-        assert.deepEqual(true, false); // Fail the test
-    }
-});
-
+        assert.deepEqual(true, false);
+    });
 
     it("Check if the booking has a user name provided.", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);

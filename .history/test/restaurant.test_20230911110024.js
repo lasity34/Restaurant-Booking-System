@@ -1,48 +1,28 @@
 import assert from "assert"
 import RestaurantTableBooking from "../services/restaurant.js";
-import pgp from "pg-promise";
+import pgPromise from 'pg-promise';
 import dotenv from "dotenv";
 
-dotenv.config();
 
-const connection = {
-    connectionString: process.env.THE_VARIABLE_NAME_HERE,
-    ssl: { rejectUnauthorized: false },
-};
-
-const db = pgp()(connection);
+const connectionString = process.env.THE_VARIABLE_NAME_HERE
+const db = pgPromise()(connectionString);
 
 describe("The restaurant booking table", function () {
-    this.timeout(5000);
     beforeEach(async function () {
         try {
     
             await db.none("TRUNCATE TABLE table_booking RESTART IDENTITY CASCADE;");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table one', 4, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table two', 6, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table three', 4, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table four', 2, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table five', 6, false);");
-            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table six', 4, false);");
         } catch (err) {
             console.log(err);
             throw err;
         }
     });
+
     it("Get all the available tables", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
-        const expectedTables = [
-            { id: 1, table_name: 'Table one', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null },
-            { id: 2, table_name: 'Table two', capacity: 6, booked: false, username: null, number_of_people: null, contact_number: null },
-            { id: 3, table_name: 'Table three', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null },
-            { id: 4, table_name: 'Table four', capacity: 2, booked: false, username: null, number_of_people: null, contact_number: null },
-            { id: 5, table_name: 'Table five', capacity: 6, booked: false, username: null, number_of_people: null, contact_number: null },
-            { id: 6, table_name: 'Table six', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null }
-        ];
-        assert.deepEqual(expectedTables, await restaurantTableBooking.getTables());
+
+        assert.deepEqual([{}, {}, {}, {}, {}], await restaurantTableBooking.getTables());
     });
-    
-    
 
 
     it("It should check if the capacity is not greater than the available seats.", async function () {
@@ -58,28 +38,15 @@ describe("The restaurant booking table", function () {
         assert.deepEqual("capacity greater than the table seats", result);
     });
 
-  it("should check if there are available seats for a booking.", async function () {
-    const restaurantTableBooking = await RestaurantTableBooking(db);
-    
-    // Number of seats required for the booking
-    const seatsRequired = 4;
+    it("should check if there are available seats for a booking.", async function () {
+        const restaurantTableBooking = await RestaurantTableBooking(db);
 
-    // Fetch all tables
-    const tables = await restaurantTableBooking.getTables();
+        // get all the tables
 
-    // Filter out booked tables
-    const availableTables = tables.filter(table => !table.booked);
+        // loop over the tables and see if there is a table that is not booked
 
-    // Check if there is a table with enough seats
-    const tableWithEnoughSeats = availableTables.find(table => table.capacity >= seatsRequired);
-
-    if (tableWithEnoughSeats) {
-        assert.deepEqual(true, true); // Pass the test
-    } else {
-        assert.deepEqual(true, false); // Fail the test
-    }
-});
-
+        assert.deepEqual(true, false);
+    });
 
     it("Check if the booking has a user name provided.", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);

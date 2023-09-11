@@ -10,7 +10,7 @@ export default function restaurant(db){
             const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
             
           
-        console.log(table)
+        
             
             // Moved this block to the top, after table validity checks
             if (seats > table.capacity) return "capacity greater than the table seats";
