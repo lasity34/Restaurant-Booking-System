@@ -44,7 +44,11 @@ export default function restaurant(db){
     // Query to check if a table is booked
     async function isTableBooked(tableName) {
         const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
-     return table
+       if (table.booked === true) {
+        return true
+       } else {
+        return false
+       }
     }
     
 

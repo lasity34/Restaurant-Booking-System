@@ -54,11 +54,13 @@ describe("The restaurant booking table", function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
 
         const result = await restaurantTableBooking.bookTable({
-            tableName: 'Table four',
+            tableId: 3,
             username: 'Kim',
             phoneNumber: '084 009 8910',
             seats: 3
         });
+
+    
 
         assert.deepEqual("capacity greater than the table seats", result);
     });
@@ -119,7 +121,7 @@ describe("The restaurant booking table", function () {
 
     it("should be able to book a table.", async function () {
         let restaurantTableBooking = RestaurantTableBooking(db);
-        // Table three should not be booked
+      
         assert.equal(false, await restaurantTableBooking.isTableBooked('Table three')); 
         // book Table three
         await restaurantTableBooking.bookTable({
@@ -128,6 +130,7 @@ describe("The restaurant booking table", function () {
             phoneNumber:  Number('084 009 8910'),
             seats: 2
         });
+        
         // Table three should be booked now
         const booked = await restaurantTableBooking.isTableBooked('Table three');
         assert.equal(true, booked); // assert it is now booked
@@ -143,7 +146,7 @@ describe("The restaurant booking table", function () {
     it("should allow users to book tables", async function () {
         let restaurantTableBooking = await RestaurantTableBooking(db);
 
-        assert.deepEqual([], await restaurantTableBooking.getBookedTablesForUser('Jodie'));
+        assert.deepEqual([], await restaurantTableBooking.getBookedTablesForUser('jodie'));
         
         restaurantTableBooking.bookTable({
             tableName: 'Table five',
@@ -167,7 +170,7 @@ describe("The restaurant booking table", function () {
         })
 
         // should only return 2 bookings as two of the bookings were for the same table
-        assert.deepEqual([{}, {}], await restaurantTableBooking.getBookedTablesForUser('Jodie'));
+        assert.deepEqual([{}, {}], await restaurantTableBooking.getBookedTablesForUser('jodie'));
     });
 
     it("should be able to cancel a table booking", async function () {

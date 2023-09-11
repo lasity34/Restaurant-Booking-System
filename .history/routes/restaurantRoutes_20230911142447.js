@@ -1,6 +1,4 @@
 
-import flash from "flash-express";
-
 export default function RestaurantRoute(restaurant_service) {
     // Show tables that can be booked and allow client to book a table that is not already booked.
     async function get(req, res) {

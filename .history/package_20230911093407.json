@@ -7,7 +7,6 @@
   "directories": {
     "test": "test"
   },
-
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js",
@@ -34,8 +33,5 @@
     "mocha": "^10.2.0",
     "nodemon": "^3.0.1",
     "pg-promise": "^11.5.4"
-  },"engines": {
-    "node": ">= 16.0.0"
   }
-
 }

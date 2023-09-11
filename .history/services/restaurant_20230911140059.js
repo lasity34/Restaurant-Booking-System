@@ -5,12 +5,12 @@ export default function restaurant(db){
     }
 
     // Query to book a table by name if not already booked and within capacity
-    async function bookTable({ tableName, username, phoneNumber, seats }) {
+    async function bookTable({ tableId, username, phoneNumber, seats }) {
         try {
             
                
             
-            const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
+            const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableId]);
             
          
             
@@ -44,7 +44,7 @@ export default function restaurant(db){
     // Query to check if a table is booked
     async function isTableBooked(tableName) {
         const table = await db.oneOrNone('SELECT * FROM table_booking WHERE table_name = $1;', [tableName]);
-     return table
+        return table ? table.booked : false;  
     }
     
 

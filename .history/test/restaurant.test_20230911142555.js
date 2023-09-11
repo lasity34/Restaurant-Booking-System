@@ -54,7 +54,7 @@ describe("The restaurant booking table", function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
 
         const result = await restaurantTableBooking.bookTable({
-            tableName: 'Table four',
+            tableId: 'Table four',
             username: 'Kim',
             phoneNumber: '084 009 8910',
             seats: 3
@@ -143,7 +143,7 @@ describe("The restaurant booking table", function () {
     it("should allow users to book tables", async function () {
         let restaurantTableBooking = await RestaurantTableBooking(db);
 
-        assert.deepEqual([], await restaurantTableBooking.getBookedTablesForUser('Jodie'));
+        assert.deepEqual([], await restaurantTableBooking.getBookedTablesForUser('jodie'));
         
         restaurantTableBooking.bookTable({
             tableName: 'Table five',
@@ -167,7 +167,7 @@ describe("The restaurant booking table", function () {
         })
 
         // should only return 2 bookings as two of the bookings were for the same table
-        assert.deepEqual([{}, {}], await restaurantTableBooking.getBookedTablesForUser('Jodie'));
+        assert.deepEqual([{}, {}], await restaurantTableBooking.getBookedTablesForUser('jodie'));
     });
 
     it("should be able to cancel a table booking", async function () {
