@@ -18,14 +18,14 @@ export default function restaurant(db){
             
             if (table.booked) return 'Table is already booked';
             
-            if (booking_size > table.capacity) return 'capacity greater than the table seats';
+            if (seats > table.capacity) return 'capacity greater than the table seats';
             
             if (!username) return 'Please enter a username';
-            if (!phone_number) return 'Please enter a contact number';
-            if (!booking_size) return 'Please enter the number of seats';
+            if (!phoneNumber) return 'Please enter a contact number';
+            if (!seats) return 'Please enter the number of seats';
             
             await db.none('UPDATE table_booking SET booked = true, username = $1, contact_number = $2, number_of_people = $3 WHERE table_name = $4;', 
-                          [username, phone_number, booking_size, tableName]);
+                          [username, phoneNumber, seats, tableName]);
             
             return true;
         } catch (error) {

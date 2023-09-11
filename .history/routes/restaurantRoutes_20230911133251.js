@@ -8,8 +8,8 @@ export default function RestaurantRoute(restaurant_service) {
 
     // Book a table that has not already been booked.
     async function book(req, res) {
-        const { booking_size, username, phone_number } = req.body;
-        const success = await restaurant_service.bookTable(booking_size, username, phone_number);
+        const { tableName, username, numberOfPeople } = req.body;
+        const success = await restaurant_service.bookTable(tableName, username, numberOfPeople);
         if (success) {
             req.flash('success', 'Table booked successfully');
         } else {

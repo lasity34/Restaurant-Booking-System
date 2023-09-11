@@ -27,7 +27,20 @@ const db = pgp({
   ssl: { rejectUnauthorized: false }
 });
 
+// Test if the database connection is null
+if (!db) {
+  console.error("Database connection is null. Shutting down...");
+  process.exit(1);
+}
 
+// Test database connection
+db.one('SELECT version()')
+  .then(result => {
+    console.log('DB connection successful:', result);
+  })
+  .catch(error => {
+    console.log('DB connection error:', error);
+  });
 
 // Initialize restaurant service
 const restaurant_service = restaurant(db);
@@ -60,9 +73,9 @@ const restaurant_route = RestaurantRoute(restaurant_service);
 
 app.get('/', restaurant_route.get); // For showing tables that can be booked
 app.post('/book', restaurant_route.book); // For booking a table
-app.get('/bookings', restaurant_route.bookings); // For showing all bookings
-app.get('/bookings/:username', restaurant_route.userBookings); // For showing bookings by a user
-app.post('/cancel', restaurant_route.cancel); // For canceling a booking
+app.get('/bookings', restaurant_route.getAllBookings); // For showing all bookings
+app.get('/bookings/:username', restaurant_route.getUserBookings); // For showing bookings by a user
+app.post('/cancel', restaurant_route.cancelBooking); // For canceling a booking
 
 
 // Server initialization

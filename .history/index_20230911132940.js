@@ -27,7 +27,20 @@ const db = pgp({
   ssl: { rejectUnauthorized: false }
 });
 
+// Test if the database connection is null
+if (!db) {
+  console.error("Database connection is null. Shutting down...");
+  process.exit(1);
+}
 
+// Test database connection
+db.one('SELECT version()')
+  .then(result => {
+    console.log('DB connection successful:', result);
+  })
+  .catch(error => {
+    console.log('DB connection error:', error);
+  });
 
 // Initialize restaurant service
 const restaurant_service = restaurant(db);
