@@ -2,18 +2,18 @@
 
     <h2 class="title is-2">Book a table</h2>
 
-   <div class="notification is-danger is-light">
-    {{#if messages.error}}
-    <button class="delete"></button>
-    {{messages.error}}
-    {{/if}}
-</div>
-<div class="notification is-success is-light">
-    {{#if messages.success}}
-    <button class="delete"></button>
-    {{messages.success}}
-    {{/if}}
-</div>
+    <div class="notification is-danger is-light">
+        {{!-- you can remove the button below if you want --}}
+        <button class="delete"></button>
+        Error Flash messages goes here...
+        <a href="https://bulma.io/documentation/elements/notification/">Read here if you wanna change the style</a>
+    </div>
+    <div class="notification is-success is-light">
+        {{!-- you can remove the button below if you want --}}
+        <button class="delete"></button>
+        Success Flash messages goes here...
+        <a href="https://bulma.io/documentation/elements/notification/">Read here if you wanna change the style</a>
+    </div>
 
 
     <div class="columns">
@@ -50,28 +50,26 @@
                 </div>
                 <div class="panel-block">
 
-             <div class="tables">
-  {{#each tables}}
+                  <div class="tables">
+    {{#each tables}}
     <div class="table">
-      <h2>{{this.table_name}}</h2>
-      <p>Capacity: {{this.capacity}}</p>
-
-      <div class="control">
-        {{#if this.booked}}
-          <img src="./images/reserved.png" width="60">
-        {{else}}
-          <label class="radio">
-            <input type="radio" name="tableId" value="{{this.id}}">
-            Book this table
-          </label>
-        {{/if}}
-      </div>
-
+        <h2>{{this.table_name}}</h2>
+        <p>Capacity: {{this.capacity}}</p>
+        
+        <div class="control">
+            {{#if this.booked}}
+            {{this.booked}}
+            <img src="./images/reserved.png" width="60">
+            {{else}}
+            <label class="radio">
+                <input type="radio" name="tableId" value="{{this.id}}">
+                Book this table
+            </label>
+            {{/if}}
+        </div>
     </div>
-  {{/each}}
+    {{/each}}
 </div>
-
-
 
                 </div>
             </div>

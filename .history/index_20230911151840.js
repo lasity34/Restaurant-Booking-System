@@ -2,7 +2,7 @@ import pgPromise from "pg-promise";  // Import pg-promise and rename it to avoid
 import express from "express";
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
-import flash from "express-flash";
+import flash from "flash-express";
 import dotenv from "dotenv";
 import RestaurantRoute from "./routes/restaurantRoutes.js";
 import restaurant from "./services/restaurant.js";

@@ -2,20 +2,15 @@ import pgPromise from "pg-promise";  // Import pg-promise and rename it to avoid
 import express from "express";
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
-import flash from "express-flash";
+import flash from "flash-express";
 import dotenv from "dotenv";
 import RestaurantRoute from "./routes/restaurantRoutes.js";
 import restaurant from "./services/restaurant.js";
-import session from "express-session";
+
 // Initialize application and environment variables
 const app = express();
 dotenv.config();
 
-app.use(session({
-  secret: 'your_secret_key',
-  resave: true,
-  saveUninitialized: true
-}));
 // Middleware
 app.use(express.static('public'));
 app.use(flash());

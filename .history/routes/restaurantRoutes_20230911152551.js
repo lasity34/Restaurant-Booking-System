@@ -6,7 +6,7 @@ export default function RestaurantRoute(restaurant_service) {
     async function get(req, res) {
         const tables = await restaurant_service.getTables();
         console.log(tables)
-        res.render('index', { tables,  messages: req.flash() });
+        res.render('index', { tables });
     }
 
     // Book a table that has not already been booked.
@@ -19,7 +19,7 @@ export default function RestaurantRoute(restaurant_service) {
         } else {
             req.flash('error', 'Unable to book table');
         }
-        res.redirect('/');
+        res.redirect('/bookings');
     }
 
     // Show all the bookings made
