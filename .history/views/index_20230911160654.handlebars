@@ -16,51 +16,52 @@
 </div>
 
 
-  <div class="columns">
-  {{#each tables}}
-  <div class="column">
-    <div class="panel">
-      <p class="panel-heading">
-        {{this.table_name}}
-      </p>
-      <div class="panel-block">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <img src="./images/table.png" width="80">
-          </div>
-        </div>
-      </div>
-      <div class="panel-block">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Table capacity</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <input class="input is-static" type="text" value="{{this.capacity}}" readonly>
-              </p>
+   <div class="columns">
+    {{#each tables}}
+    <div class="column">
+      <div class="panel">
+        <p class="panel-heading">
+          {{this.table_name}}
+        </p>
+        <div class="panel-block">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <img src="./images/table.png" width="80">
             </div>
           </div>
         </div>
-      </div>
-      <div class="panel-block">
-        <div class="control">
-          {{#if this.booked}}
-          <img src="./images/reserved.png" width="60">
-          {{else}}
-          <label class="radio">
-           
-            <input type="radio" name="tableName" value="{{this.table_name}}">
-    Book this table
-          </label>
-          {{/if}}
+        <div class="panel-block">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Table capacity</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input class="input is-static" type="text" value="{{this.capacity}}" readonly>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-block">
+          <div class="control">
+            {{#if this.booked}}
+            <img src="./images/reserved.png" width="60">
+            {{else}}
+            <label class="radio">
+              <input type="radio" name="tableId" value="{{this.id}}">
+             <input type="hidden" name="tableName" value="{{this.table_name}}">
+
+              Book this table
+            </label>
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
+    {{/each}}
   </div>
-  {{/each}}
-</div>
 
     <div class="columns">
         <div class="column is-3">

@@ -12,8 +12,6 @@ export default function RestaurantRoute(restaurant_service) {
     // Book a table that has not already been booked.
     async function book(req, res) {
         const { tableName, booking_size, username, phone_number, } = req.body;
-        console.log("Debug: Request body is ", req.body);
-
         // Pass the tableName to the bookTable function
         const message = await restaurant_service.bookTable({ tableName, username, phoneNumber: phone_number, seats: booking_size });
         

@@ -50,9 +50,9 @@
           <img src="./images/reserved.png" width="60">
           {{else}}
           <label class="radio">
-           
-            <input type="radio" name="tableName" value="{{this.table_name}}">
-    Book this table
+            <input type="radio" name="tableId" value="{{this.id}}">
+            <input type="hidden" name="tableName" value="{{this.table_name}}">
+            Book this table
           </label>
           {{/if}}
         </div>

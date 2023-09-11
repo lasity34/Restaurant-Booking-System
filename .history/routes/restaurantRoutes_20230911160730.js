@@ -11,11 +11,8 @@ export default function RestaurantRoute(restaurant_service) {
 
     // Book a table that has not already been booked.
     async function book(req, res) {
-        const { tableName, booking_size, username, phone_number, } = req.body;
-        console.log("Debug: Request body is ", req.body);
-
-        // Pass the tableName to the bookTable function
-        const message = await restaurant_service.bookTable({ tableName, username, phoneNumber: phone_number, seats: booking_size });
+        const { tableId, booking_size, username, phone_number, tableName } = req.body;
+        const message = await restaurant_service.bookTable(tableId, booking_size, username, phone_number, tableName);
         
         if (message === 'Table booked successfully') {
             req.flash('success', message);
@@ -23,9 +20,10 @@ export default function RestaurantRoute(restaurant_service) {
         } else {
             req.flash('error', message);
             const tables = await restaurant_service.getTables();
-            res.render('index', { tables, messages: req.flash() });
+            res.render('index', { tables });
         }
     }
+    
 
     // Show all the bookings made
     async function bookings(req, res) {
