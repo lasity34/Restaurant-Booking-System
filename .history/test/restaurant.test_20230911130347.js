@@ -120,19 +120,20 @@ describe("The restaurant booking table", function () {
     it("should be able to book a table.", async function () {
         let restaurantTableBooking = RestaurantTableBooking(db);
         // Table three should not be booked
-        assert.equal(false, await restaurantTableBooking.isTableBooked('Table three')); 
+        assert.equal(true, await restaurantTableBooking.isTableBooked('Table three'));
         // book Table three
+
         await restaurantTableBooking.bookTable({
             tableName: 'Table three',
             username: 'Kim',
             phoneNumber:  Number('084 009 8910'),
             seats: 2
         });
+
         // Table three should be booked now
-        const booked = await restaurantTableBooking.isTableBooked('Table three');
-        assert.equal(true, booked); // assert it is now booked
+        const booked = await restaurantTableBooking.isTableBooked('Table three')
+        assert.equal(true, booked);
     });
-    
 
     it("should list all booked tables.", async function () {
         let restaurantTableBooking = RestaurantTableBooking(db);
