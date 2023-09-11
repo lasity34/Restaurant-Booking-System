@@ -21,7 +21,7 @@ export default function restaurant(db){
             
             if (!username) return 'Username is required for booking';
             if (!phoneNumber) return 'Contact number is required for booking';
-            if (!seats) return 'capacity greater than the table seats';
+            if (!seats) return 'Number of seats is required for booking';
             
             await db.none('UPDATE table_booking SET booked = true, username = $1, contact_number = $2, number_of_people = $3 WHERE table_name = $4;', 
                           [username, phoneNumber, seats, tableName]);
