@@ -16,12 +16,10 @@ export default function RestaurantRoute(restaurant_service) {
         
         if (message === 'Table booked successfully') {
             req.flash('success', message);
-            res.redirect('/bookings');
         } else {
             req.flash('error', message);
-            const tables = await restaurant_service.getTables();
-            res.render('index', { tables });
         }
+        res.redirect('/bookings');
     }
     
 
