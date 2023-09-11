@@ -19,7 +19,7 @@ export default function restaurant(db){
             
             if (seats > table.capacity) return 'capacity greater than the table seats';
             
-            if (!username) return 'Please enter a username';
+            if (!username) return 'Username is required for booking';
             if (!phoneNumber) return 'Contact number is required for booking';
             if (!seats) return 'No seats available';
             
